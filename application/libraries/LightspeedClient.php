@@ -75,6 +75,10 @@ class LightspeedClient {
 		return $response;
 	}
 
+	/**
+	 * Not useing now
+	 * @return mixed|null
+	 */
 	public function generateClientToken(){
 
 		$params=array(	"support@thelaunchstars.com",

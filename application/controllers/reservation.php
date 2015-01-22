@@ -159,6 +159,7 @@ class Reservation extends CI_Controller {
             $this->load->library('LightspeedClient');
             $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
             $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
+            $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
 
             $response                   = null;
             $cust_sn                    = null; //collection from database after add

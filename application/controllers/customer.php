@@ -147,48 +147,63 @@ class Customer extends CI_Controller {
 
     }//end function
 
+    /*
+    public function test(){
+        $this->load->library('LightspeedClient');
+        $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
+        $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
+        $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
+
+        $response = $this->lightspeedclient->getCustomers(0, 100);
+//        $response = $this->lightspeedclient->getVersion();
+//        $response = $this->lightspeedclient->getVersion();
+
+        var_dump($response);
+
+        exit();
+    } */
+
     public function sync(){
         if($this->session->userdata('is_logged_in')==TRUE){
 
-
-//              1. get first 200 customers
-//              2.  if client
-//              3.      if client exist in database [using in_array()]
-//              4.          update the client
-//              5.      else
-//              6.          add new client
-//              7.  end if
-//              8. end loop
-
-
-
             $new_customers = Array();
+
+
+
+            $this->load->model('customer_model');
+            $client_result = $this->customer_model->getClientIds();
+
+            $client_ids = ah_array_column($client_result,"client_id");
+
+
 
             $this->load->library('LightspeedClient');
             $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
             $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
-
-            $this->load->model('customer_model');
-            $result = $this->customer_model->getClientIds();
-
-            $client_ids = ah_array_column($result,"client_id");
+            $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
 
             $continue_sync  = true;
             $cust_index     = 0;
-            $cust_amount    = 50;
+            $cust_amount    = 100;
 
 
-            $response = $this->lightspeedclient->getCustomers($cust_index, $cust_amount);
 
-            if(is_null($response)==true){
+//            $response = $this->lightspeedclient->getCustomers($cust_index, $cust_amount);
 
-                $result= Array("status"=>false,"error"=>"Lightspeed Server not responding","errorType"=>"Lightspeed Server Error");
-                echo json_encode($result);
-                exit();
-            }
+//            if(is_null($response)==true){
+//
+//                $result= Array("status"=>false,"error"=>"Lightspeed Server not responding","errorType"=>"Lightspeed Server Error");
+//                echo json_encode($result);
+//                exit();
+//            }
 
-            $result = $response->result;
+//            $result = $response->result;
 
+//
+//            $response = $this->lightspeedclient->getCustomers($cust_index, $cust_amount);
+//            echo json_encode(Array("status"=>true, "response"=>$response,"index"=>$cust_index,"amount"=>$cust_amount
+//            ,"company_id"=>$this->session->userdata['company_id'],"token"=>$this->session->userdata['api_token']));
+//            exit();
 
             while($continue_sync== true) {
 
@@ -196,7 +211,8 @@ class Customer extends CI_Controller {
 
                 $result = $response->result;
 
-//                echo json_encode(Array("status"=>true, "count"=>count($response->result), "result"=>$result));
+//                echo json_encode(Array("status"=>true, "response"=>$response,"index"=>$cust_index,"amount"=>$cust_amount
+//                ,"company_id"=>$this->session->userdata['company_id'],"token"=>$this->session->userdata['api_token']));
 //                $continue_sync=false;
 //                exit();
 

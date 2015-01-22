@@ -16,8 +16,8 @@ Figure 1 is a screenshot of the table. ![alt Partner Table figure](http://i.imgu
 A database schema `lria_schema.sql` is given in support folder. Import the database in your MySQL server and configure the database info in `\application\confi\gconfig.php` file.
 
 ###System Requirements
-PHP 5.3
-MySQL 5.173
+* PHP 5.3
+* MySQL 5.173
 
 You must populate the `tblPartner` with atleast one row with either live or demo partner account. Otherwise, you might signin to the system, but you'll have no `api_token` to access the Lightspeed API.
 

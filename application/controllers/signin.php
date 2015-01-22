@@ -37,10 +37,10 @@ class Signin extends CI_Controller {
              if(count($user)==1){
 
 //                 TODO $login_type Argument of getPartner: 0 = dev/test; 1=live;
-                 $partner= $this->user_model->getPartner(0);
+                 $partner= $this->user_model->getPartner(1);
 
 
-//                 var_dump($partner[0]);
+                 var_dump($partner[0]);
 
 //                 exit();
                  $params= Array( 'url'      => $partner[0]['json_url'],
@@ -59,12 +59,12 @@ class Signin extends CI_Controller {
 //                 $client_token       = $this->lightspeedclient->generateClientToken();
                  $client_token      ='';
 
-//                 $this->lightspeedclient->setCompanyId( $partner[0]['company_id']);
+
 //                 echo 'API TOKEN: '.PHP_EOL;
 //                 var_dump($api_token);
 
-//                 $slots = $this->lightspeedclient->getCustomers();
-////
+//                 $this->lightspeedclient->setCompanyId( $partner[0]['company_id']);
+//                 $slots = $this->lightspeedclient->getCustomers(0,100);
 //                 echo 'getCustomers: '.PHP_EOL;
 //                 var_dump($slots);
 //                 exit();
@@ -78,12 +78,12 @@ class Signin extends CI_Controller {
                             'client_token'   => $client_token,
                             'api_token'      => $api_token,
                             'company_id'      => $partner[0]['company_id'],
+                            'api_endpoint'      => $partner[0]['json_url'],
                             'is_logged_in'   => true
                     );
 
 //                 print_r($user_ses);
 //                 exit();
-
 
                  $this->session->set_userdata($user_ses);
 
