@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+Options -Indexes
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+AddOutputFilter DEFLATE css js
+ExpiresActive On
+ExpiresByType application/x-javascript A2592000
+
+</IfModule>

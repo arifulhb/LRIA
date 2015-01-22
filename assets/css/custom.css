@@ -1,0 +1,45 @@
+/*
+Webarc Modification
+*/
+
+.header .chat-toggler .profile-pic{
+    float: right;
+}
+.header .chat-toggler .profile-pic{
+    border-radius: 10px;-moz-border-radius: 10px;-webkit-border-radius: 10px;
+}
+.header .chat-toggler a{
+    float: right;margin-left: 10px;
+}
+
+
+/* UTILITY */
+.pull-up{padding-top: 10px;}
+.pull-up-double{padding-top: 20px;}
+
+.pull-down{padding-bottom: 10px;}
+.pull-down-double{padding-bottom: 20px;}
+
+
+.accesskey{text-decoration: underline;}
+
+
+#notification{
+    /*border-radius: 5px;*/
+    /*-moz-border-radius: 5px;*/
+    /*-webkit-border-radius: 5px;*/
+    /*padding: 10px;*/
+    /*border:1px #f1f1f1 solid;*/
+    /*background-color: whitesmoke;*/
+
+}
+
+li.current a{background-color: #e0e4e8;}
+.pagination-sm > li.next:last-child > a,
+.pagination-sm > li.previous:first-child > a{
+    height: 29px;padding-top: 6px;
+}
+/* Plugin Update*/
+.clockpicker-popover{
+    z-index: 9999;
+}
