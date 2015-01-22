@@ -19,3 +19,9 @@ A database schema `lria_schema.sql` is given in support folder. Import the datab
 PHP 5.3
 MySQL 5.173
 
+You must populate the `tblPartner` with atleast one row with either live or demo partner account. Otherwise, you might signin to the system, but you'll have no `api_token` to access the Lightspeed API.
+
+
+#### Default Signin
+When you have the system up and running, you need to singin to the system. Default __Username__ is *lria@example.com* and __Password__ is *123*.
+
