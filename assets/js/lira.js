@@ -659,7 +659,12 @@ $(document).ready(function(){
                 },
                 error:function(error){
 
-                    console.log("Error: "+error);
+                    //var array = $.map(error, function(value, index) {
+                    //    console.log("Index: "+index+ " | Value: "+value );
+                    //});
+
+                    console.log("My Error: "+error);
+
                     Messenger().post({
                         message: error,
                         type: 'error',

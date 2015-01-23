@@ -168,13 +168,10 @@ class Customer extends CI_Controller {
 
             $new_customers = Array();
 
-
-
             $this->load->model('customer_model');
             $client_result = $this->customer_model->getClientIds();
 
             $client_ids = ah_array_column($client_result,"client_id");
-
 
 
             $this->load->library('LightspeedClient');
@@ -186,24 +183,6 @@ class Customer extends CI_Controller {
             $cust_index     = 0;
             $cust_amount    = 100;
 
-
-
-//            $response = $this->lightspeedclient->getCustomers($cust_index, $cust_amount);
-
-//            if(is_null($response)==true){
-//
-//                $result= Array("status"=>false,"error"=>"Lightspeed Server not responding","errorType"=>"Lightspeed Server Error");
-//                echo json_encode($result);
-//                exit();
-//            }
-
-//            $result = $response->result;
-
-//
-//            $response = $this->lightspeedclient->getCustomers($cust_index, $cust_amount);
-//            echo json_encode(Array("status"=>true, "response"=>$response,"index"=>$cust_index,"amount"=>$cust_amount
-//            ,"company_id"=>$this->session->userdata['company_id'],"token"=>$this->session->userdata['api_token']));
-//            exit();
 
             while($continue_sync== true) {
 
@@ -251,7 +230,6 @@ class Customer extends CI_Controller {
 
                     }//end for
 
-
 //                    Continue the loop
                     $cust_index += $cust_amount;
                     $continue_sync = true;
@@ -264,25 +242,32 @@ class Customer extends CI_Controller {
 
             }//end while
 
-            if(count($new_customers)>0){
-//            Add New Customer in Batch to database
-                    $batch_result = $this->customer_model->insert_batch($new_customers);
 
-                    if($batch_result ==true){
-                        $result = Array("status"=>true,"new_count"=>count($new_customers), "new_customers"=>$new_customers);
-                    }
-                    else{
-                        $result = Array("status"=>false,"error"=>"New ".count($new_customers)." customers insert into database Error. ","errorType"=>"LIRA App Error");
-                    }
-            }else{
+            if(is_null($new_customers)==false){
+
+                if(count($new_customers)>0){
+//                  Add New Customer in Batch to database
+                        $batch_result = $this->customer_model->insert_batch($new_customers);
+
+                        if($batch_result ==true){
+                            $result = Array("status"=>true,"new_count"=>count($new_customers), "new_customers"=>$new_customers);
+                        }
+                        else{
+                            $result = Array("status"=>false,"error"=>"New ".count($new_customers)." customers insert into database Error. ","errorType"=>"LIRA App Error");
+                        }
+                }else{
+                    $result = Array("status"=>true,"new_count"=>0);
+                }
+            }
+            else{
                 $result = Array("status"=>true,"new_count"=>0);
             }
-
-
+//            header("Content-Type: text/javascript; charset=utf-8");
             echo json_encode($result);
 
 
         }else{
+//            header("Content-Type: text/javascript; charset=utf-8");
             echo json_encode(Array("status"=>false,"error"=>"User not logged in!","errorType"=>"LIRA App Validation"));
         }
 
