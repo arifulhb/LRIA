@@ -114,16 +114,18 @@ class User extends CI_Controller {
         $_action=$this->input->post('_action');
         
         if($_action=='add'){
-            $this->form_validation->set_rules('inputUserEmail', 'User Email', 'trim|required|max_length[250]|xss_clean|valid_email|is_unique[tblusers.user_email]');
-            $data['user_email']     = $this->input->post('inputUserEmail');
+//            $this->form_validation->set_rules('inputUserEmail', 'User Email', 'trim|required|max_length[250]|xss_clean|valid_email|is_unique[tblusers.user_email]');
+            $this->form_validation->set_rules('inputUsername', 'Username', 'trim|required|max_length[10]|xss_clean|is_unique[tblusers.username]');
+            $data['username']     = $this->input->post('inputUsername');
         }
-        $this->form_validation->set_rules('inputUserName', 'User Name', 'trim|required|max_length[250]|xss_clean');
-                
-        
+        $this->form_validation->set_rules('inputUserName', 'Name', 'trim|required|max_length[250]|xss_clean');
+        $this->form_validation->set_rules('inputUserEmail', 'User Email', 'trim|max_length[50]|xss_clean|valid_email');
+
 
         $data['user_name']      = $this->input->post('inputUserName');
+        $data['user_email']    = $this->input->post('inputUserEmail');
         $data['user_status']    = 1;
-        
+
         if ($this->form_validation->run() == true)
         {                         
             $res=false;
@@ -131,7 +133,7 @@ class User extends CI_Controller {
 
             if($_action=='add'){
                 //add only when add new data
-                $data['user_password']      = md5($this->input->post('inputUserEmail'));
+                $data['user_password']      = md5($this->input->post('inputUsername'));
 
                 
                 $res= $this->user_model->insert($data);    
@@ -291,21 +293,6 @@ class User extends CI_Controller {
         
     }//end function
 
-    /*
-    public function changepassword(){
-        if($this->session->userdata('is_logged_in')==TRUE){
-            
-            $data=  site_data();
-            $data['_page_title']="Change Password";
-            
-            $this->template->user_changepassword($data);  
-            
-        }else{
-            redirect('signin');
-        }
-    }//end functioin
-  
- */
 
     public function cpvalidation(){
     
@@ -323,7 +310,7 @@ class User extends CI_Controller {
                 $this->load->model('user_model');
                 $data['user_password'] =md5($this->input->post('newPassword'));
                 
-                $res=$this->user_model->changepassword($data,$this->session->userdata('user_sn'));
+                $res=$this->user_model->changepassword($data,$this->session->userdata('u_sn'));
                 
                 if($res==TRUE){
 
@@ -356,118 +343,5 @@ class User extends CI_Controller {
         
         
     }//end function
-    /*
-    public function changepin(){
-        
-        if($this->session->userdata('is_front_logged_in')==TRUE){
-            
-            $data=  site_data();
-            $data['_page_title']="Change PIN";
-            
-            $this->template->user_changepin($data);  
-            
-        }else{            
-            redirect('signin');
-        }
-    }//end functioin
-    
-    
-    public function cpinvalidation(){
-        
-      if($this->session->userdata('is_front_logged_in')==TRUE){
-          
-          $this->load->library('form_validation');
-            
-            $this->form_validation->set_rules('newPassword', 'PIN',      'trim|max_length[12]|matches[confirmPassword]|xss_clean|is_unique[avcd_user.user_pin]');
-            $this->form_validation->set_rules('confirmPassword', 'Confirm PIN', 'trim|required|max_length[12]|xss_clean');
-            
-            if ($this->form_validation->run() == true)
-            {             
-                $this->load->model('user_model');
-                $data['user_pin'] =$this->input->post('newPassword');   //Change PIN
-                
-                $res=$this->user_model->changepassword($data,$this->session->userdata('user_sn'));
-                
-                if($res==TRUE){
-                    $this->session->set_flashdata('cp',true);
-                    redirect('user/changepin');
-                }else{
-                    echo 'Sorry! Can not change PIN';                    
-                }
-                
-            }else{
-                //PASSWORD DOESNT MATCH, RETURN ERROR
-                //echo validation_errors();
-                $this->session->set_flashdata('cp',true);
-                $this->session->set_flashdata('_error',  validation_errors());
-                redirect('user/changepin');
-            }
-          
-            
-        }else{
-            redirect('signin');
-        }
-        
-        
-    }//end function
-    */
-
-    /*
-          public function updatepassword(){
-
-              if($this->session->userdata('is_logged_in')==TRUE){
-
-                $this->load->library('form_validation');
-                $this->form_validation->set_rules('_pass', 'Password',      'trim|max_length[12]|matches[_repass]|xss_clean');
-                $this->form_validation->set_rules('_repass', 'Confirm Password', 'trim|required|max_length[12]|xss_clean');
-
-
-                if ($this->form_validation->run() == true)
-                {
-                    $this->load->model('user_model');
-                    $data['user_pass']   = md5($this->input->post('_pass'));
-                    $user_sn    = $this->input->post('_user_sn');
-
-                    $res= $this->user_model->changepassword($data,$user_sn);
-
-                    echo $res;
-
-                }else{
-                    echo validation_errors();
-                }
-
-            }else{
-                redirect('signin');
-            }
-        }//end changepasswrod
-
-          public function updatepin(){
-
-              if($this->session->userdata('is_logged_in')==TRUE){
-
-                $this->load->library('form_validation');
-                $this->form_validation->set_rules('_pin', 'PIN',      'trim|max_length[12]|xss_clean|is_unique[avcd_user.user_pin]');
-                $this->form_validation->set_rules('_repin', 'RE PIN', 'trim|required|max_length[12]|xss_clean|matches[_repin]');
-
-
-                if ($this->form_validation->run() == true)
-                {
-                    $this->load->model('user_model');
-                    $data['user_pin']   = $this->input->post('_pin');
-                    $user_sn    = $this->input->post('_user_sn');
-
-                    $res= $this->user_model->changepassword($data,$user_sn);
-
-                    echo $res;
-
-                }else{
-                    echo validation_errors();
-                }
-
-            }else{
-                redirect('signin');
-            }
-        }//end changepasswrod
-    */
 
 }//end class
