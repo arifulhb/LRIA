@@ -1,9 +1,25 @@
 <div class="row login-container column-seperation">
     <div class="col-md-5 col-md-offset-1"  style="height: 270px;">
         <h1><?php echo $_site_title;?></h1>
-        <p><?php echo $_site_description;?><br>
+        <p><?php echo $_site_description;?></p>
             <?php /*<a href="#">Sign up Now!</a> for a webarch account,It's free and always will be..</p>*/?>
+
         <br>
+        <p>
+            <?php
+            $notice         = $this->session->flashdata('notice');
+            $username    = $this->session->flashdata('username');
+            if(strlen($notice)>0){ ?>
+
+            <div class="alert">
+                <button class="close" data-dismiss="alert"></button>
+                Warning:&nbsp; <?php echo $notice;?>
+            </div>
+                <?php
+            }//end if
+            ?>
+
+        </p>
 
     </div>
     <div class="col-md-5"> <br>
@@ -16,8 +32,8 @@
                     <div class="controls">
                         <div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="email" name="signinEmail" id="txtusername" class="form-control" required=""
-                                placeholder="email@domain.com" autofocus="">
+                            <input type="text" name="username" id="username" class="form-control" required=""
+                                placeholder="Username" autofocus="" value="<?php echo $username;?>">
                         </div>
                     </div>
                 </div>

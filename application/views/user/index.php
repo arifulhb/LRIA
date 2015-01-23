@@ -4,8 +4,8 @@
 
 
     <header class="page-title">
-        <i class="fa fa-user"></i> <h3> <?php echo $_page_title;?></h3>
-        <a class="btn btn-primary pull-right" href="<?php echo base_url().'user/new'?>" role="button">Add New User</a>
+        <i class="fa fa-user"></i> <h3 style="width: 50%;"> <?php echo $_page_title;?></h3>
+        <a class="btn btn-primary btn-sm pull-right" href="<?php echo base_url().'user/new'?>" role="button">Add User</a>
     </header>
 
 
@@ -19,7 +19,8 @@
                 <thead>
                     <tr>
                         <th><i class=" fa fa-edit"></i> Action</th>
-                        <th>User Name</th>
+                        <th>Name</th>
+                        <th>Username</th>
                         <th>User Email</th>
                         <th>Status</th>
                     </tr>
@@ -43,6 +44,7 @@
 
                             <td><a href="#">
                                     <span class="user_name"><?php echo $row['user_name'];?></span></a></td>
+                            <td><?php echo $row['username'];?></td>
                             <td><?php echo $row['user_email'];?></td>
                             <td>
                                 <?php echo $row['user_status']; ?>

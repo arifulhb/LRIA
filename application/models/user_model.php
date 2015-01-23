@@ -41,12 +41,12 @@ class User_model extends CI_Model
         
     public function signin($data){
         
-        $user_email    =$data['user_email'];
+        $username    =$data['username'];
         $user_pass  =md5($data['user_password']);
         
         $this->db->select('u.*');
         $this->db->from('tblusers AS u');
-        $this->db->where('u.user_email',$user_email);
+        $this->db->where('u.username',$username);
         $this->db->where('u.user_password',$user_pass);
         $res=$this->db->get();        
         return $res->result_array();

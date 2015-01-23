@@ -6,17 +6,18 @@ if($_action=='update'){ ?>
     
     <?php
 
-    $_name      = $_record[0]['user_name'];
-
-    $_user_sn    = $_record[0]['user_sn'];
+    $_name          = $_record[0]['user_name'];
+    $_user_sn       = $_record[0]['user_sn'];
     $_userEmail     = $_record[0]['user_email'];
+    $_username      = $_record[0]['username'];
 
 }//end if
 else{
     
     $_name      = '';
-    $_user_sn    = '';
+    $_user_sn   = '';
     $_userEmail = '';
+    $_username  = '';
 }
 ?>
 
@@ -77,11 +78,11 @@ else{
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="inputOutlet" class="form-label">Email Address</label>
-                                        <span class="help">User ID</span>
+                                        <label for="inputUsername" class="form-label">Username *</label>
+                                        <span class="help">Username will be used to login</span>
                                         <div class="input-with-icon right">
-                                            <input type="email" class="form-control" id="inputUserEmail" maxlength="250"
-                                                   name="inputUserEmail" placeholder="User Email" value="<?php echo $_userEmail;?>" required=""
+                                            <input type="text" class="form-control" id="inputUsername" maxlength="10"
+                                                   name="inputUsername" placeholder="Username" value="<?php echo $_username;?>" required=""
                                                     <?php echo $_action=='update'?'disabled':'';?>>
                                         </div>
                                     </div>
@@ -91,16 +92,37 @@ else{
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        ...
+                                        <div class="form-group">
+                                            <label for="inputOutlet" class="form-label">Email Address</label>
+                                            <span class="help">User Email Address</span>
+                                            <div class="input-with-icon right">
+                                                <input type="email" class="form-control" id="inputUserEmail" maxlength="50"
+                                                       name="inputUserEmail" placeholder="User Email" value="<?php echo $_userEmail;?>">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-
-                                    <input type="submit" class="finish btn btn-primary" value="<?php echo ucfirst($_action);?> User">
-
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-10 col-md-6">
+                                </div>
+                                <div class="col-sm-6 col-lg-2 col-md-6">
+                                    <div class="form-group">
+
+                                            <button type="submit" class="finish btn-block btn btn-primary">
+                                                <i class='fa fa-user-plus'></i> <?php echo ucfirst($_action);?> User
+                                            </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </form>
+
+                    </div>
+                    <div class="gird-footer">
 
                     </div>
                 </div><!--grid-->
@@ -139,7 +161,7 @@ else{
                                     <div class="form-group">
                                         <label for="up_re_new_password" class="form-label"></label>
                                         <div class="input-with-icon right">
-                                            <button type="button" class="btn btn-sm btn-cons btn-default" id='change_password'
+                                            <button type="button" class="btn btn-sm btn-cons btn-default btn-block" id='change_password'
                                                 style="margin-top: 7px;" disabled>
                                                 Change Password</button>
                                         </div>

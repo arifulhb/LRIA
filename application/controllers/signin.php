@@ -23,12 +23,12 @@ class Signin extends CI_Controller {
         
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('signinEmail', 'User Email', 'trim|required|xss_clean|valid_email');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
         $this->form_validation->set_rules('signinPassword', 'Password', 'trim|required|xss_clean');
                 
         if($this->form_validation->run()==TRUE){
 
-            $data['user_email']=$this->input->post('signinEmail');
+            $data['username']=$this->input->post('username');
             $data['user_password']=$this->input->post('signinPassword');
             
             $this->load->model('user_model');            
@@ -72,7 +72,7 @@ class Signin extends CI_Controller {
                 //pass                                 
                     $user_ses = array(
                             'u_sn'           => $user[0]['user_sn'],
-                            'u_email'        => $user[0]['user_email'],
+                            'u_username'        => $user[0]['username'],
                             'u_first_name'   => $user[0]['user_name'],
                             'u_status'       => $user[0]['user_status'],   //1 is dash 2 is merchant
                             'client_token'   => $client_token,
@@ -93,7 +93,7 @@ class Signin extends CI_Controller {
             }else{
                 //Signin Auth fail
                 //echo 'signin auth fail';                
-                $this->session->set_flashdata('signinEmail', $data['signinEmail']);
+                $this->session->set_flashdata('username', $data['username']);
                 $this->session->set_flashdata('notice', 'User or Password does not match!' );
                 redirect ('signin');
             }
