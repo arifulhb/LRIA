@@ -180,11 +180,10 @@
                                         <label for="rtime" class="col-sm-2 no-padding control-label">Time</label>
                                         <div class="col-sm-10 no-padding">
                                             <div class="input-group col-md-12 rclockpicker" id="">
+                                                <span class="input-group-addon ">
+                                                   <i id="icon-clock" class="fa fa-clock-o"></i>
+                                                  </span>
                                                 <input type="text" id="rtime" class="form-control" placeholder="Pick a time">
-                                              <span class="input-group-addon ">
-                                               <i id="icon-clock" class="fa fa-clock-o"></i>
-                                              </span>
-
                                             </div>
                                         </div>
 
@@ -197,11 +196,10 @@
                                         <label for="rdate" class="col-sm-2 no-padding control-label">Date</label>
                                         <div class="col-sm-10 no-padding">
                                             <div class="input-group date col-md-12 col-lg-12 no-padding">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
                                                 <input type="text" class="form-control" id="rdate" value="<?php echo date("d/m/Y",strtotime("today"));?>">
-                                            <span class="input-group-addon">
-<!--                                                <span class="arrow"></span>-->
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
                                             </div>
                                         </div>
 
@@ -211,16 +209,39 @@
                             </div><!--endrow-->
                             <br>
                             <div class="row">
-                                <div id="pax-group" class="form-group">
+                                <div class="col-lg-6">
+                                    <div id="pax-group" class="form-group">
 
-                                    <label for="rpax" class="col-sm-1 control-label">Pax</label>
-                                    <div class="col-sm-11">
-                                        <div class="input-append success date col-md-12 col-lg-12 no-padding">
-                                            <input type="number" id="rpax" name="rpax" placeholder="Number of Pax"
-                                                   value="2" class="form-control">
+                                        <label for="rpax" class="col-sm-2 no-padding control-label">Pax</label>
+                                        <div class="col-sm-10 no-padding">
+                                            <div class="input-group success date col-md-12 col-lg-12 no-padding">
+                                                <span class="input-group-addon">
+                                                    <i id="icon_pax" class="fa fa-user-plus"></i>
+                                                </span>
+                                                <input type="number" id="rpax" name="rpax" placeholder="Number of Pax"
+                                                       value="2" class="form-control">
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div id="table-group" class="form-group">
+                                        <label for="rtable" class="col-sm-2 no-padding control-label">Table</label>
+                                        <div class="col-sm-10 no-padding">
+                                            <div class="input-group col-lg-12">
+                                                <span class="input-group-addon">
+                                                    <i id="icon_table" class="fa fa-plus"></i>
+                                                </span>
+                                                <select class="form-control col-lg-12" id="floor_tables" disabled="DISABLED">
+                                                    <option value="loading">Loading...</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <br>
                             <div class="row">

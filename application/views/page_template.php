@@ -40,7 +40,8 @@ echo doctype('html5'); ?>
         echo link_tag('assets/barebone/assets/plugins/jquery-scrollbar/jquery.scrollbar.css');
         echo link_tag('assets/barebone/assets/plugins/boostrapv3/css/bootstrap.min.css');
         echo link_tag('assets/barebone/assets/plugins/boostrapv3/css/bootstrap-theme.min.css');
-        echo link_tag('assets/barebone/assets/plugins/font-awesome/css/font-awesome.css');
+//        echo link_tag('assets/barebone/assets/plugins/font-awesome/css/font-awesome.css');
+        echo link_tag('assets/plugins/font-awesome/css/font-awesome.css');
 
 
 //      Webarch CSS

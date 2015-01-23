@@ -110,6 +110,17 @@ class LightspeedClient {
 
 	}//end function
 
+	public function getFloor(){
+
+
+		$params=array($this->_api_token,$this->_company_id);
+
+		$response = $this->invoke(17,'posiosApi.getFloors',$params);
+		return $response;
+
+	}
+
+
 	public function getClientToken(){
 
 		return $this->_client_token;

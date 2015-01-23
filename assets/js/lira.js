@@ -104,6 +104,51 @@ $(document).ready(function(){
             'default': 'now'
         });
 
+
+        $('#icon_table').removeClass("fa-plus");
+        $('#icon_table').addClass("fa-spinner fa-spin");
+        $.ajax({
+            type: "POST",
+            url: app_path+'/reservation/ajax_getFloors/',
+            //data: 'keyword='+$("#searchCustomer").val(),
+            success: function(response) {
+                //console.log("Response: "+response);
+
+                var data = JSON.parse(response);
+                var str ='';
+
+                var mainObject = $.map(data, function(floor, index) {
+
+
+                    str += "<optgroup label='"+floor.name+"' data-floor-id='"+floor.oid+"'>";
+
+                        var tableObject = $.map(floor.tables, function(tableValue, tableIndex){
+
+                            str += "<option value='"+tableValue.oid+"'>"+tableValue.name+"</option>";
+
+                        });
+
+                    str+="</optgroup>";
+
+                });
+
+                $("#floor_tables option[value='loading']").remove();
+                $('#floor_tables').append(str);
+                //console.log('str: '+str);
+
+                $('#floor_tables').prop('disabled',false);
+                $('#icon_table').addClass("fa-plus");
+                $('#icon_table').removeClass("fa-spinner fa-spin");
+                //console.log("data: "+data);
+            },
+            error:function(_error){
+                $('#icon_table').addClass("fa-plus");
+                $('#icon_table').removeClass("fa-spinner fa-spin");
+                console.log("Error: "+_error);
+            }
+
+        });
+
         //Date picker
         $('#rdate').datepicker({
             format: 'dd/mm/yyyy'
@@ -450,6 +495,8 @@ $(document).ready(function(){
                 reservation+= '&res_time='+$('#rtime').val();
                 reservation+= '&res_date='+$('#rdate').val();
                 reservation+= '&res_pax='+$('#rpax').val();
+                reservation+= '&res_table='+$('#floor_tables option:selected').val();
+                reservation+= '&res_floor='+$('#floor_tables :selected').parent().attr('data-floor-id');
                 reservation+= '&res_note='+$('#rnote').val();
 
                 //console.log("reservation data: "+reservation);
@@ -526,12 +573,14 @@ $(document).ready(function(){
 
         var enableForm = function(){
             $("input").prop('disabled', false);
+            $("select").prop('disabled', false);
             $("button").prop('disabled', false);
 
         }
 
         var disableForm = function(){
             $("input").prop('disabled', true);
+            $("select").prop('disabled', true);
             $("button").prop('disabled', true);
         }
     }//end reservation

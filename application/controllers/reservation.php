@@ -152,6 +152,31 @@ class Reservation extends CI_Controller {
 
     }//end function getReservationSlots
 
+    public function ajax_getFloors(){
+
+        if($this->session->userdata('is_logged_in')==TRUE){
+
+            $this->load->library('LightspeedClient');
+            $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
+            $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
+            $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
+
+            $floors = $this->lightspeedclient->getFloor();
+
+            if(isset($floors->result)){
+                echo json_encode($floors->result);
+            }else{
+                echo json_encode(Array());
+            }
+        }
+        else{
+            $error = Array("status"=>false,"error"=>"User Not Loggedin","errorType"=>"Applicatino Error");
+            json_encode($error);
+        }
+
+    }//end function
+
+
     public function ajax_save(){
 
         if($this->session->userdata('is_logged_in')==TRUE){
@@ -299,6 +324,8 @@ class Reservation extends CI_Controller {
 //            exit();
 
 
+            $reservation['floorId']               = $this->input->post("res_floor"); //floorId
+            $reservation['tableId']               = $this->input->post("res_table"); //res_table
             $reservation['notes']               = $this->input->post("res_note"); //notes
             $reservation['companyId']           = $this->session->userdata['company_id']; //company id
 
