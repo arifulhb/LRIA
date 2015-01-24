@@ -20,54 +20,32 @@
         }
 
         echo meta($meta);
-
-        //Bootstrap
-//        echo link_tag('assets/plugins/bootstrap/css/bootstrap.css');
-        //Loading Font-Awesome
-
-//        echo link_tag('assets/plugins/font-awesome/css/font-awesome.min.css');
-
-         //LinkTag -> add CSS
-//        echo link_tag('assets/css/app.css');
-//        echo link_tag('assets/css/animate.css');
-//        echo link_tag('assets/css/landing.css');?>
+    ?>
 
 
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>-->
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+        <?php echo link_tag('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');//CDN?>
+
     <link href="<?php echo base_url().'assets/barebone/';?>assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>-->
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/css/animate.min.css" rel="stylesheet" type="text/css"/>-->
     <!-- END CORE CSS FRAMEWORK -->
     <!-- BEGIN CSS TEMPLATE -->
     <link href="<?php echo base_url().'assets/barebone/';?>assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url().'assets/barebone/';?>assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/css/responsive.css" rel="stylesheet" type="text/css"/>-->
+<!--    <link href="--><?php //echo base_url().'assets/barebone/';?><!--assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>-->
     <!-- END CSS TEMPLATE -->
 
 
     <?php
-
-        //echo link_tag('assets/css/plugin.css');
-        
-        //Google Font
-//        $open_sans=array('href'=>'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,700,600',
-//                    'rel' => 'stylesheet',
-//                    'type' => 'text/css');
-//        echo link_tag($open_sans);
-        
         //Favicon
         /*$ficon=array('href'=>'assets/images/dog1_16.png',
                     'rel' => 'icon',
                     'type' => 'image/png');
         echo link_tag($ficon);
-
-    ?>
-    <!--favicon-->
-    <link rel="icon" type="image/x-icon" sizes="32x32"
-          href="<?php echo base_url(); ?>assets/img/favicon/favicon.png" />
-          */
+        ?>*/
         ?>
 
 
@@ -85,7 +63,7 @@
             <p>
                 <a href="<?php echo $_company_website;?>" target="_blank"
                    title="<?php echo $_company;?>">
-                    <small><?php echo $_company;?></small><br>
+                    <small>Developed by <?php echo $_company;?></small><br>
                 </a><small>&copy; 2013-2015</small>
             </p>
         </div>
@@ -93,11 +71,13 @@
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN CORE JS FRAMEWORK-->
-<script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url().'assets/barebone/';?>assets/js/login.js" type="text/javascript"></script>
+<!--<script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script> <!--CDN-->
+<!--<script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" type="text/javascript"></script><!--CDN-->
+<!--<script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/pace/pace.min.js" type="text/javascript"></script>-->
+<!--<script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>-->
+<!--<script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/js/login.js" type="text/javascript"></script>-->
 <!-- BEGIN CORE TEMPLATE JS -->
 <!-- END CORE TEMPLATE JS -->
 

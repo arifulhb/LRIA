@@ -31,6 +31,7 @@
                                 <th>Customer</th>
                                 <th>Phone</th>
                                 <th>Pax</th>
+                                <th>Table</th>
                                 <th>Note</th>
                                 <th>Date & Time</th>
 
@@ -48,6 +49,7 @@
                                     <td><?php echo $row['cust_firstname'].' '.$row['cust_lastname'];?></td>
                                     <td><?php echo $row['cust_phone_no'];?></td>
                                     <td><?php echo $row['rsrv_pax'];?></td>
+                                    <td><?php echo $row['tableName']." - <em>".$row['floorName']."</em>";?></td>
                                     <td><?php echo $row['rsrv_note'];?></td>
                                     <td><?php echo date("D, d M, Y h:i a",strtotime($row['rsrv_date']));?></td>
                                     <td><?php echo $row['user_name'];?></td>

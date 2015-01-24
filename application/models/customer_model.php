@@ -33,7 +33,14 @@ class Customer_model extends CI_Model
         return $res;
 
     }//end function
-    
+
+    public function update_batch($data=null){
+
+        $result = $this->db->update_batch('tblCustomer', $data, 'cust_client_id');
+        return $result;
+
+    }//end function
+
     public function search($keyword, $search_by,$limit,$offset){
         
         if($offset==''){
@@ -80,9 +87,9 @@ class Customer_model extends CI_Model
      */
     public function getClientIds(){
 
-        $this->db->select("cust_oid as client_id");
+        $this->db->select("cust_client_id as client_id");
         $this->db->from("tblCustomer");
-        $this->db->where("cust_oid !=", "");
+        $this->db->where("cust_client_id !=", "");
         $result = $this->db->get();
 
         return $result->result_array();
@@ -143,7 +150,7 @@ class Customer_model extends CI_Model
             $offset=0;
         }
 
-        $this->db->select("c.cust_sn, c.cust_firstname, c.cust_lastname, c.cust_phone_no, c.cust_email, c.create_by, c.create_date, u.user_name");
+        $this->db->select("c.cust_sn, c.cust_firstname, c.cust_lastname, c.cust_phone_no, c.cust_email, c.create_by, c.create_date, u.user_name, c.cust_oid");
         $this->db->from("tblCustomer c");
         $this->db->join('tblusers AS u ','c.create_by =u.user_sn','LEFT');
         $this->db->order_by('c.create_date','DESC');
@@ -153,30 +160,7 @@ class Customer_model extends CI_Model
         return $res->result_array();
         
     }//end function
-    
-//    public function getListFilter($per_page,$offset,$filter){
-//
-//        if($offset==''){
-//            $offset=0;
-//        }
-//
-//        $sql='SELECT `cust_sn`, `cust_card_id`, `cust_first_name`, `cust_last_name`, `cust_mobile`, `cust_car_no`, IFNULL(UNIX_TIMESTAMP(c.date_added),0) as date_added, cust_additional,';
-//        $sql.='(SELECT GROUP_CONCAT(n.cmpn_name SEPARATOR ", ") FROM avcd_subscription AS s LEFT OUTER JOIN avcd_campaign AS n ON n.cmpn_sn=s.cmpn_sn WHERE s.cust_sn=c.cust_sn ) AS cmpn_name ';
-//        $sql.='FROM (`avcd_customer` AS c) ';
-//        $sql.='WHERE c.date_added >= "'.$filter['from'].' 00:00:00" ';
-//        $sql.='AND c.date_added <= "'.$filter['to'].' 23:59:59" ';
-//        $sql.='GROUP BY `c`.`cust_sn` ';
-//        $sql.='ORDER BY `c`.`date_added` DESC ';
-//        $sql.=' LIMIT '.$offset.','.$per_page;
-//        $res=$this->db->query($sql);
-//        //echo $this->db->last_query();
-//        //print_r($res->result_array());
-//        //exit();
-//        return $res->result_array();
-//
-//    }//end function
-    
-   
+
         
     public function getRecord($_sn=NULL){
         
@@ -190,7 +174,14 @@ class Customer_model extends CI_Model
         
     }//end function
 
-      
+    public function updateByClientId($data, $clientId){
+
+        $this->db->where('cust_client_id',$clientId);
+        $res=$this->db->update('tblCustomer',$data);
+        return $res;
+
+    }//end function
+
     
     public function update($data, $_sn){
 

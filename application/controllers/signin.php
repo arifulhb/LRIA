@@ -56,7 +56,6 @@ class Signin extends CI_Controller {
 
 
                  $api_token          = $this->lightspeedclient->getApiToken();
-//                 $client_token       = $this->lightspeedclient->generateClientToken();
                  $client_token      ='';
 
 
@@ -88,8 +87,9 @@ class Signin extends CI_Controller {
                  $this->session->set_userdata($user_ses);
 
 
-                    redirect('dashboard');
-            
+//                    redirect('dashboard');
+                    redirect('reservation/form');
+
             }else{
                 //Signin Auth fail
                 //echo 'signin auth fail';                

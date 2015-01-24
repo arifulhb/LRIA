@@ -222,7 +222,6 @@ class Reservation extends CI_Controller {
                 $customer['email']          = $this->input->post("cust_email");
                 $customer['username']       = $this->input->post("cust_email");
                 $customer['telephone']      = $this->input->post("cust_phone");
-
                 $customer['password']       = 'Abc@1234';
 
                 if ($this->form_validation->run() == true)
@@ -247,8 +246,7 @@ class Reservation extends CI_Controller {
                         $lr_cust_oid                    = $cust_ls_response->result;
 
 
-                        $addCustomer['cust_oid']        = $cust_ls_response->result;
-
+                        $addCustomer['cust_client_id']   = $cust_ls_response->result;
 
                         $addCustomer['cust_firstname']  = $customer['firstname'];
                         $addCustomer['cust_lastname']   = $customer['lastname'];
@@ -366,6 +364,12 @@ class Reservation extends CI_Controller {
                 $rdata['rsrv_date']     = date("Y-m-d H:i:s",$res_long_start_date);
                 $rdata['rsrv_pax']      = $reservation['seats'];
                 $rdata['rsrv_note']     = $reservation['notes'];
+
+                $rdata['tableId']       = $this->input->post("res_table");
+                $rdata['floorId']       = $this->input->post("res_floor");
+                $rdata['tableName']     = $this->input->post("res_table_name");
+                $rdata['floorName']     = $this->input->post("res_floor_name");
+
 
                 $rdata['customerId']        = $reservation_result->result->customerId;
                 $rdata['reservationId']     = $reservation_result->result->reservationId;

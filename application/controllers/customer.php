@@ -78,23 +78,14 @@ class Customer extends CI_Controller {
     public function ajax_search($keyword){
         
         if($this->session->userdata('is_logged_in')==TRUE){
-            
-//            $keyword    = $this->input->get('s');
-//            $search_by  = $this->input->get('by');
-            
 
             $this->load->model('customer_model');    
 
 
-//              $data['_pagi_msg'] = '1 - '.$last;
+            $data['_list']= $this->customer_model->getAjaxSearchResult($keyword);
 
-              //$data['_list']=$this->customer_model->getList($config['per_page'],$this->uri->segment(3));
 
-                $data['_list']= $this->customer_model->getAjaxSearchResult($keyword);
-
-//                $result = Array("result"=>true,"data"=>$data['_list']);
-
-                echo json_encode($data['_list']);
+            echo json_encode($data['_list']);
             
 //           $data['_page_title']='Search Result';
 //           $this->template->customer_index($data);
@@ -166,7 +157,8 @@ class Customer extends CI_Controller {
     public function sync(){
         if($this->session->userdata('is_logged_in')==TRUE){
 
-            $new_customers = Array();
+            $new_customers      = Array();
+            $update_customer    = Array();
 
             $this->load->model('customer_model');
             $client_result = $this->customer_model->getClientIds();
@@ -208,7 +200,9 @@ class Customer extends CI_Controller {
 //                                Add New
 
                                 $ar = Array();
-                                $ar['cust_oid']             = $customer->clientId;
+                                $ar['cust_oid']             = $customer->oid;
+                                $ar['cust_client_id']       = $customer->clientId;
+
                                 $ar['cust_firstname']       = $customer->firstname;
                                 $ar['cust_lastname']        = $customer->lastname;
                                 $ar['cust_email']           = $customer->email;
@@ -224,6 +218,27 @@ class Customer extends CI_Controller {
                                 array_push($new_customers,$ar);
 
                             }//end else
+                            else{
+//                                Update Customer
+                                $ar = Array();
+                                $ar['cust_oid']             = $customer->oid;
+                                $ar['cust_client_id']       = $customer->clientId;
+
+                                $ar['cust_firstname']       = $customer->firstname;
+                                $ar['cust_lastname']        = $customer->lastname;
+                                $ar['cust_email']           = $customer->email;
+                                $ar['cust_phone_no']        = $customer->telephone;
+                                $ar['cust_username']        = $customer->username;
+                                $ar['cust_password']        = $customer->password;
+//                                $ar['cust_note']            = "Added by sync process.";
+
+                                $ar['update_by']            = $this->session->userdata('u_sn');
+                                $date = new DateTime();
+                                $ar['update_date']          = $date->format("Y-m-d H:i:s");
+
+                                array_push($update_customer,$ar);
+
+                            }
 
 
                         }//end if strlen($customer->clientId) >1
@@ -242,7 +257,14 @@ class Customer extends CI_Controller {
 
             }//end while
 
+            $status     = false;
+            $error_msg  =  "";
+            $error_type = "";
+            $new_count  = 0;
+            $update_cuount = 0;
+            $batch_result = false;
 
+//            Batch Insert to Database
             if(is_null($new_customers)==false){
 
                 if(count($new_customers)>0){
@@ -250,19 +272,64 @@ class Customer extends CI_Controller {
                         $batch_result = $this->customer_model->insert_batch($new_customers);
 
                         if($batch_result ==true){
-                            $result = Array("status"=>true,"new_count"=>count($new_customers), "new_customers"=>$new_customers);
+                            $status = true;
+//                            $result = Array("status"=>true,"new_count"=>count($new_customers), "new_customers"=>$new_customers);
                         }
                         else{
-                            $result = Array("status"=>false,"error"=>"New ".count($new_customers)." customers insert into database Error. ","errorType"=>"LIRA App Error");
+                            $status = false;
+                            $error_msg = "Customers insert into database Error";
+                            $error_type = "LIRA App Error";
+//                            $result = Array("status"=>false,"error"=>"New ".count($new_customers)." customers insert into database Error. ","errorType"=>"LIRA App Error");
                         }
                 }else{
-                    $result = Array("status"=>true,"new_count"=>0);
+                    $status = true;
+                    $new_count = 0;
+//                    $result = Array("status"=>true,"new_count"=>0);
                 }
             }
             else{
-                $result = Array("status"=>true,"new_count"=>0);
+                $status = true;
+                $new_count = 0;
+//                $result = Array("status"=>true,"new_count"=>0);
             }
-//            header("Content-Type: text/javascript; charset=utf-8");
+
+//            $update_batch_result = false;
+
+//            Batch Update Database
+            if(is_null($update_customer)==false){
+
+                if(count($update_customer)>0){
+                    $this->customer_model->update_batch($update_customer);
+                    $update_cuount = count($update_customer);
+
+//                    if($update_batch_result == true){
+//                        $status = true;
+//                    }else{
+//                        $status = false;
+//                        $error_msg = "Customers Update into database Error";
+//                        $error_type = "LIRA App Error";
+//                    }
+
+                }
+                else{
+                    $status = true;
+                    $update_cuount = 0;
+                }
+            }else{
+                $status = true;
+                $update_cuount = 0;
+            }
+
+
+
+            if($status == true){
+                $result = Array("status"=>$status, "new_count"=>$new_count, "update_count"=>$update_cuount);
+            }else{
+                $result = Array("status"=>$status, "error"=>$error_msg,"errorType"=>$error_type);
+
+            }
+
+
             echo json_encode($result);
 
 
@@ -270,6 +337,78 @@ class Customer extends CI_Controller {
 //            header("Content-Type: text/javascript; charset=utf-8");
             echo json_encode(Array("status"=>false,"error"=>"User not logged in!","errorType"=>"LIRA App Validation"));
         }
+
+    }//end function
+
+
+//    public function ajax_deleteLsCustomer($customer_id){
+//
+//        $this->load->library('LightspeedClient');
+//        $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
+//        $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
+//        $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
+//
+//        $customer = $this->lightspeedclient->deleteCustomer($customer_id);
+//
+//        var_dump($customer);
+//
+//    }//end function
+
+    public function ajax_syncCustomerById($customer_id){
+
+        if($this->session->userdata('is_logged_in')==TRUE){
+
+            $customer = $this->getLSCustomerById($customer_id);
+
+//            echo json_encode(Array("customer"=>$customer));
+//            exit();
+            if(is_null($customer)==false){
+
+                $data['cust_firstname'] = $customer->firstname;
+                $data['cust_lastname']  = $customer->lastname;
+                $data['cust_phone_no']  = $customer->telephone;
+                $data['cust_email']     = $customer->email;
+                $data['cust_username']  = $customer->email;
+                $data['cust_password']  = $customer->password;
+
+                $data['update_by']            = $this->session->userdata('u_sn');
+                $date = new DateTime();
+                $data['update_date']          = $date->format("Y-m-d H:i:s");
+
+
+                $this->load->model('customer_model');
+//
+                $res = $this->customer_model->updateByClientId($data,$customer->clientId);
+
+                echo json_encode(Array("status"=>true,"customer"=>$data));
+
+            }else{
+
+                echo json_encode(Array("status"=>false,"error"=>"Customer Not found in Lightspeed","errorType"=>"Lightspeed Error",
+                    "customer"=>$customer));
+            }
+
+        }else{
+
+            $error = Array("status"=>false,"error"=>"User Not Loggedin","errorType"=>"Applicatino Error");
+            json_encode($error);
+
+        }
+
+    }//end function
+
+    private function getLSCustomerById($customer_id){
+
+
+        $this->load->library('LightspeedClient');
+        $this->lightspeedclient->setApiToken($this->session->userdata['api_token']);
+        $this->lightspeedclient->setCompanyId($this->session->userdata['company_id']);
+        $this->lightspeedclient->setServerUrl($this->session->userdata['api_endpoint']);
+
+        $response  = $this->lightspeedclient->getCustomerById($customer_id);
+
+
+        return $response->result;
 
     }//end function
 

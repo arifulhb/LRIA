@@ -139,6 +139,14 @@ class LightspeedClient {
 
 	}//end function
 
+	public function getCustomerById($customer_id){
+
+		$params=array($this->_api_token,$this->_company_id, $customer_id);
+
+		$response = $this->invoke(18,'customerApi.getCustomerById',$params);
+		return $response;
+
+	}//end function
 	public function getReservationSlots(){
 
 		$params=array($this->_api_token,$this->_company_id);
@@ -186,6 +194,16 @@ class LightspeedClient {
 		return $response;
 
 	}//end function
+
+//	public function deleteCustomer($customer_id){
+//
+//		$params=array($this->_api_token, $this->_company_id, $customer_id);
+//
+//		$response = $this->invoke(19,'customerApi.deleteCustomerFromCompany',$params);
+//
+//		return $response;
+//
+//	}//end function
 
 	// CONNECT TO POSiOS api server to get apiToken
 	private function connectToPOSiOS(){

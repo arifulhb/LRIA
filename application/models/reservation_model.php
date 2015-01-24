@@ -24,7 +24,7 @@ class Reservation_model extends CI_Model
             $offset=0;
         }
 
-        $this->db->select("r.rsrv_sn, r.rsrv_date as rsrv_date, r.rsrv_pax, r.rsrv_note, r.cust_is_repeat, r.reservationId, r.cust_sn, c.cust_firstname, c.cust_lastname, c.cust_phone_no, c.cust_email, r.create_by, r.create_date as rcreate_date, u.user_name ");
+        $this->db->select("r.rsrv_sn, r.rsrv_date as rsrv_date, r.rsrv_pax, r.rsrv_note, r.cust_is_repeat, r.reservationId, r.cust_sn, c.cust_firstname, c.cust_lastname, c.cust_phone_no, c.cust_email, r.create_by, r.create_date as rcreate_date, u.user_name, floorName, tableName ");
         $this->db->from("tblReservation r");
         $this->db->join('tblusers AS u ','r.create_by =u.user_sn','LEFT');
         $this->db->join('tblCustomer AS c ','c.cust_sn =r.cust_sn','LEFT');

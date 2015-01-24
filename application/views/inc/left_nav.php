@@ -31,7 +31,7 @@ if(isset($_menu_active)==false){
                 <!-- BEGIN SELECTED LINK -->
                 <li class="start <?php echo $_menu_top=='dash'?'active':'';?>">
                     <a href="<?php echo base_url().'dashboard';?>">
-                        <i class="icon-custom-home"></i>
+                        <i class="fa fa-dashboard"></i>
                         <span class="title">Dashboard</span>
                         <span class="selected"></span>
 <!--                        <span class="badge badge-important pull-right">5</span>-->
@@ -167,4 +167,13 @@ if(isset($_menu_active)==false){
             <div class="clearfix"></div>
             <!-- END SIDEBAR WIDGETS -->
         </div><div class="scroll-element scroll-x scroll-scrolly_visible"><div class="scroll-element_outer">    <div class="scroll-element_size"></div>    <div class="scroll-element_track"></div>    <div class="scroll-bar" style="width: 89px;"></div></div></div><div class="scroll-element scroll-y scroll-scrolly_visible"><div class="scroll-element_outer">    <div class="scroll-element_size"></div>    <div class="scroll-element_track"></div>    <div class="scroll-bar" style="height: 141px; top: 0px;"></div></div></div></div>
+
+<!--    <div class="text-center hidden-xs hidden-sm hidden-md">-->
+<!--        <p>-->
+<!--            <a href="--><?php //echo $_company_website;?><!--" target="_blank"-->
+<!--               title="--><?php //echo $_company;?><!--">-->
+<!--                <small>Developed by --><?php //echo $_company;?><!--</small><br>-->
+<!--            </a><small>&copy; 2013-2015</small>-->
+<!--        </p>-->
+<!--    </div>-->
 </div>

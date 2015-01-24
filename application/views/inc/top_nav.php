@@ -14,7 +14,7 @@
             <!-- END MOBILE HEADER -->
             <!-- BEGIN LOGO -->
             <a href="<?php echo base_url();?>" title="<?php echo $_site_title;?>">
-                <img class="logo" src="<?php echo base_url().'assets/images/logo.png';?>">
+                <img class="logo" src="<?php echo base_url().'assets/images/logobluebalilria.png';?>">
             </a>
             <!-- END LOGO -->
 

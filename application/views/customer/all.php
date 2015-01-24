@@ -27,24 +27,42 @@
                         <table class="table table-bordered no-more-tables table-responsive table-hover">
                             <thead>
                             <tr>
+
                                 <th>Firstname</th>
                                 <th>Lastname</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Added By</th>
                                 <th>Create Date</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             foreach($_list as $row){ ?>
-                                <tr>
-                                    <td><?php echo $row['cust_firstname'];?></td>
-                                    <td><?php echo $row['cust_lastname'];?></td>
-                                    <td><?php echo $row['cust_phone_no'];?></td>
-                                    <td><?php echo $row['cust_email'];?></td>
-                                    <td><?php echo $row['user_name'];?></td>
-                                    <td><?php echo $row['create_date'];?></td>
+                                <tr id="row_<?php echo $row['cust_oid'];?>">
+                                    <td class="firstname"><?php echo $row['cust_firstname'];?></td>
+                                    <td class="lastname"><?php echo $row['cust_lastname'];?></td>
+                                    <td class="telephone"><?php echo $row['cust_phone_no'];?></td>
+                                    <td class="email-body">
+                                        <?php echo substr($row['cust_email'],-11)=="noemail.net"?"":$row['cust_email'];?>
+
+                                    </td>
+                                    <td class="username"><?php echo $row['user_name'];?></td>
+                                    <td class="createdate"><?php echo $row['create_date'];?></td>
+                                    <td>
+                                        <div class="btn-group btn-group-xs" role="group">
+
+                                            <?php if(strlen($row['cust_oid'])>0){ ?>
+                                                        <button type="button" class="btn btn-xs btn-default btn-sync"
+                                                        value="<?php echo $row['cust_oid'];?>"><i class="fa fa-refresh"></i> Sync</button>
+                                                <?php
+                                            }//end if
+                                            ?>
+<!--                                            <button type="button" class="btn btn-xs btn-default btn-remove"-->
+<!--                                                    value="--><?php //echo $row['cust_sn'];?><!--"><i class="fa fa-trash"></i> Remove</button>-->
+                                        </div>
+                                    </td>
 
                                 </tr>
 

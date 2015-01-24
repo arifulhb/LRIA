@@ -38,23 +38,25 @@ echo doctype('html5'); ?>
 //      Webarch Plugin
 //        echo link_tag('assets/barebone/assets/plugins/pace/pace-theme-flash.css');
         echo link_tag('assets/barebone/assets/plugins/jquery-scrollbar/jquery.scrollbar.css');
-        echo link_tag('assets/barebone/assets/plugins/boostrapv3/css/bootstrap.min.css');
+//        echo link_tag('assets/barebone/assets/plugins/boostrapv3/css/bootstrap.min.css');
+        echo link_tag('http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');//CDN
+
         echo link_tag('assets/barebone/assets/plugins/boostrapv3/css/bootstrap-theme.min.css');
 //        echo link_tag('assets/barebone/assets/plugins/font-awesome/css/font-awesome.css');
-        echo link_tag('assets/plugins/font-awesome/css/font-awesome.css');
-
+//        echo link_tag('assets/plugins/font-awesome/css/font-awesome.css');
+        echo link_tag('http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');//CDN
 
 //      Webarch CSS
-        echo link_tag('assets/barebone/assets/css/animate.min.css');
+//        echo link_tag('assets/barebone/assets/css/animate.min.css');
         echo link_tag('assets/barebone/assets/css/style.css');
         echo link_tag('assets/barebone/assets/css/responsive.css');
-        echo link_tag('assets/barebone/assets/css/custom-icon-set.css');
+//        echo link_tag('assets/barebone/assets/css/custom-icon-set.css');
 
 
         echo link_tag('assets/barebone/assets/plugins/bootstrap-datepicker/css/datepicker.min.css');
         echo link_tag('assets/barebone/assets/plugins/boostrap-clockpicker/bootstrap-clockpicker.min.css');
-        echo link_tag('assets/barebone/assets/plugins/boostrap-clockpicker/jquery-clockpicker.min.css');
-        echo link_tag('assets/barebone/assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css');
+//        echo link_tag('assets/barebone/assets/plugins/boostrap-clockpicker/jquery-clockpicker.min.css');
+//        echo link_tag('assets/barebone/assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css');
 
         echo link_tag('assets/barebone/assets/plugins/jquery-notifications/css/messenger.min.css');
         echo link_tag('assets/barebone/assets/plugins/jquery-notifications/css/location-sel.min.css');
@@ -68,7 +70,7 @@ echo doctype('html5'); ?>
         //echo link_tag('assets/css/landing.css');
         
         //JQUERY
-        echo link_tag('http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
+        echo link_tag('http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');//CDN
         
         //Google Font
 //       $open_sans=array('href'=>'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,700,600',
@@ -114,27 +116,22 @@ echo doctype('html5'); ?>
         echo $_content;
 
         //SIDE
-//            $this->load->view('inc/right_nav');
+//            $this->load->view('inc/footer');
         ?>
 
     </div>
 
 
-     <?php
-//     Reservation Modal
-
-//     $this->load->view("reservation/form");
-
-//    PROFILER
-
-    //<script>require(['page/page_template']);</script>
-    //$this->output->enable_profiler(TRUE);
-    ?>
-
     <!-- BEGIN CORE JS FRAMEWORK-->
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script> <!--CDN-->
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>-->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js" type="text/javascript"></script><!--CDN-->
+
+
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/breakpoints.js" type="text/javascript"></script>
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-unveil/jquery.unveil.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
@@ -148,14 +145,14 @@ echo doctype('html5'); ?>
 
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/pace/pace.min.js" type="text/javascript"></script>-->
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>-->
 
     <!--    Date & Clock Picker-->
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/boostrap-clockpicker/jquery-clockpicker.min.js" type="text/javascript"></script>
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/boostrap-clockpicker/jquery-clockpicker.min.js" type="text/javascript"></script>-->
     <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/boostrap-clockpicker/bootstrap-clockpicker.min.js" type="text/javascript"></script>
-    <script src="<?php echo base_url().'assets/barebone/';?>assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<!--    <script src="--><?php //echo base_url().'assets/barebone/';?><!--assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>-->
     <!-- END PAGE LEVEL PLUGINS -->
 
 <!--    Notification-->

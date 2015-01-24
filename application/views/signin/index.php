@@ -45,7 +45,7 @@
                     <div class="controls">
                         <div class="input-with-icon  right">
                             <i class=""></i>
-                            <input type="password" name="signinPassword" id="txtpassword" class="form-control">
+                            <input type="password" name="signinPassword" id="txtpassword" class="form-control" required="">
                         </div>
                     </div>
                 </div>
