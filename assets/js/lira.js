@@ -667,7 +667,7 @@ $(document).ready(function(){
                 url:app_path+'/customer/sync/',
                 success:function(response){
 
-                    //console.log(response);
+                    console.log(response);
                     //console.log("response: "+response);
                     var result = JSON.parse(response);
 
