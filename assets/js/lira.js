@@ -90,14 +90,6 @@ $(document).ready(function(){
 
         $("#btnSave").html("<i class='"+"fa fa-book"+"'></i> New Reservation");
 
-        //
-        //Messenger().post({
-        //    message: "This is error",
-        //    type: 'error',
-        //    hideAfter: 20,
-        //    showCloseButton: true
-        //});
-
         //Time pickers
         $('.rclockpicker').clockpicker({
             autoclose: true,
@@ -185,7 +177,8 @@ $(document).ready(function(){
                                     value:          value.cust_lastname,
                                     cust_firstname:  value.cust_firstname,
                                     cust_lastname:  value.cust_lastname,
-                                    cust_oid:       value.cust_oid,
+                                    //cust_oid:       value.cust_oid,
+                                    cust_client_id: value.cust_client_id,
                                     cust_email:     value.cust_email,
                                     cust_phone:     value.cust_phone_no,
                                     ////cust_license_date: (item.cust_license_date===null?'':item.cust_license_date),
@@ -207,6 +200,7 @@ $(document).ready(function(){
                 var array = $.map(ui, function(value, index) {
 
                     //console.log("value: "+value +" Index: "+index)
+                    //console.log("cust client id: "+value.cust_client_id);
 
                     var a2 = $.map(value, function(val, key){
                         //console.log("key:"+key+" val:"+val);
@@ -223,7 +217,7 @@ $(document).ready(function(){
                             case 'cust_phone':
                                 $('#l_cust_handphone').html(val);
                                 break;
-                            case 'cust_oid':
+                            case 'cust_client_id':
                                 $('#cust_ls_oid').val(val);
                                 break;
                             case 'key':
@@ -270,7 +264,6 @@ $(document).ready(function(){
             $('#cust_email').val('');
             $("#lira_customer_sn").val()
             $("#cust_ls_oid").val()
-
 
             hideCustomer();
         }
@@ -344,7 +337,8 @@ $(document).ready(function(){
                 var validateCustomer_firstname = true;
                 var validateCustomer_lastname = true;
                 var validateCustomer_phonename = true;
-                var validateCustomer_emailname = true;
+                //var validateCustomer_emailname = true;
+                var customer_email  = "";
 
                 var validateTime = true;
                 var validateDate = true;
@@ -391,16 +385,19 @@ $(document).ready(function(){
                     else{ validateCustomer_phonename = true; $("#handphone-group").removeClass("has-error");}
 
                     if($("#cust_email").val().length <= 0){
-                        $("#email-group").addClass("has-error");
-                        $("#cust_email").focus();
-                        Messenger().post({
-                            message: "Please enter email address !",
-                            type: 'error', hideAfter: 10, showCloseButton: true
-                        });
-                        validateCustomer_emailname = false;
-                        showAddCustomer();
+                        //$("#email-group").addClass("has-error");
+                        //$("#cust_email").focus();
+                        //Messenger().post({
+                        //    message: "Please enter email address !",
+                        //    type: 'error', hideAfter: 10, showCloseButton: true
+                        //});
+                        //validateCustomer_emailname = false;
+                        //showAddCustomer();
+                        customer_email = $("#cust_handphone").val()+"@noemail.net";
                     }//end if
-                    else{ validateCustomer_emailname = true;$("#email-group").removeClass("has-error");}
+                    else{
+                        customer_email = $("#cust_email").val();
+                    }
 
 
                 }//end rtime
@@ -408,7 +405,7 @@ $(document).ready(function(){
                     validateCustomer_firstname = true;
                     validateCustomer_lastname = true;
                     validateCustomer_phonename = true;
-                    validateCustomer_emailname = true;
+                    //validateCustomer_emailname = true;
                 }
 
 
@@ -458,7 +455,7 @@ $(document).ready(function(){
                 }
 
                 if(validateTime == false || validateDate == false || validatePax == false || validateCustomer_firstname == false
-                    || validateCustomer_lastname == false || validateCustomer_phonename == false || validateCustomer_emailname == false){
+                    || validateCustomer_lastname == false || validateCustomer_phonename == false ){
                     return 0;
                 }
 
@@ -487,7 +484,7 @@ $(document).ready(function(){
                     reservation+= '&cust_firstname='+$('#cust_firstname').val();
                     reservation+= '&cust_lastname='+$('#cust_lastname').val();
                     reservation+= '&cust_phone='+$('#cust_handphone').val();
-                    reservation+= '&cust_email='+$('#cust_email').val();
+                    reservation+= '&cust_email='+customer_email;
 
                 }//end else
 
@@ -496,7 +493,9 @@ $(document).ready(function(){
                 reservation+= '&res_date='+$('#rdate').val();
                 reservation+= '&res_pax='+$('#rpax').val();
                 reservation+= '&res_table='+$('#floor_tables option:selected').val();
+                reservation+= '&res_table_name='+$('#floor_tables option:selected').text();
                 reservation+= '&res_floor='+$('#floor_tables :selected').parent().attr('data-floor-id');
+                reservation+= '&res_floor_name='+$('#floor_tables :selected').parent().attr('label');
                 reservation+= '&res_note='+$('#rnote').val();
 
                 //console.log("reservation data: "+reservation);
@@ -668,10 +667,12 @@ $(document).ready(function(){
                 url:app_path+'/customer/sync/',
                 success:function(response){
 
+                    //console.log(response);
                     //console.log("response: "+response);
                     var result = JSON.parse(response);
 
                     //console.log(result);
+
                     if(result.status==true){
                         //$("#sync_title").css("display","block");
                         $("#sync_title").html( "<i class='fa fa-check'></i> "+ "Sync Complete");
@@ -682,8 +683,12 @@ $(document).ready(function(){
 
                         }else if (result.new_count>0){
                             $('#sync_status').html(result.new_count+" new customer synced.");
-                        }else{
-                            //console.log(result);
+                        }
+                        if(result.update_count==0){
+                            $('#sync_status').append("<br>No customer was updated.");
+
+                        }else if (result.update_count>0){
+                            $('#sync_status').append("<br>"+result.update_count+" customer is updated.");
                         }
 
                     }else if(result.status==false){
@@ -737,4 +742,79 @@ $(document).ready(function(){
 
     }//end if
 
+    var customer_index = $(".customer_index").length;
+    if(customer_index >0){
+
+        $('.btn-sync').mouseenter(function(){
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-primary');
+        });
+        $('.btn-sync').mouseout(function(){
+            $(this).addClass('btn-default');
+            $(this).removeClass('btn-primary');
+        });
+
+        $('.btn-sync').click(function(){
+            $('button').prop('disabled',true);
+            $(this).find('i').addClass('fa-spin');
+
+            var oid = $(this).val();
+            $.ajax({
+                type: "POST",
+                url:app_path+'/customer/ajax_syncCustomerById/'+oid,
+                processData:false,
+                //data:'user_sn='+user_sn+'&newPassword='+cpass+'&confirmPassword='+rpass,
+                success:function(_result){
+
+                    var res = JSON.parse(_result);
+
+                    //console.log(res);
+
+                    if(res.status==true){
+
+                        //console.log("custo name: "+res.customer['cust_firstname']);
+
+                        $('#row_'+oid).find('.firstname').html(res.customer['cust_firstname']);
+                        $('#row_'+oid).find('.lastname').html(res.customer['cust_lastname']);
+                        $('#row_'+oid).find('.telephone').html(res.customer['cust_telephone']);
+                        if(res.customer['cust_email'].substr(res.customer['cust_email'].length-11)=='noemail.net'){
+                            $('#row_'+oid).find('.email').html("");
+                        }else{
+                            $('#row_'+oid).find('.email').html(res.customer['cust_email']);
+                        }
+
+
+                        $("#row_"+oid).addClass("success");
+
+                        Messenger().post({
+                            message: res.customer['cust_firstname']+" updated successfully.",
+                            type: 'success', hideAfter: 10, showCloseButton: true
+                        });
+
+                    }else{
+                        //console.log("error");
+                        Messenger().post({
+                            message: "<i class='fa fa-warning'></i> Sync error!",
+                            type: 'error', hideAfter: 10, showCloseButton: true
+                        });
+                    }
+
+
+                    $('i').removeClass('fa-spin');
+                    $('button').prop('disabled',false);
+                },
+                error:function(_error){
+                    console.log("Error: "+_error);
+                    Messenger().post({
+                        message: "<i class='fa fa-warning'></i> "+_error,
+                        type: 'Error', hideAfter: 10, showCloseButton: true
+                    });
+                    $('i').removeClass('fa-spin');
+                    $('button').prop('disabled',false);
+                }
+
+            });
+        });
+
+    }//end customer index
 });
