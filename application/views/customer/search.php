@@ -1,29 +1,109 @@
 <?php
-$search_by=$this->input->get('by');
-$keyword=$this->input->get('s');
+//$keyword=$this->input->get('q');
+//
+//echo "Show list: ";
+//print_r($_list);
 ?>
-<div class="panel panel-default">
-    <div class="panel-heading">Search</div>
-    <div class="panel-body">
-        <form class="form-inline" method="GET" 
-              action="<?php echo base_url().'customer/search';?>">
-            <div class="form-group col-sm-3">
-                <select class="form-control" id="search_by" name="by">
-                    <option <?php echo $search_by=='name' || $search_by==''?'SELECTED':'' ;?> value="name">Search by Name</option>
-                    <option <?php echo $search_by=='nric'?'SELECTED':'' ;?> value="nric">Search by NRIC</option>
-                    <option <?php echo $search_by=='card_number'?'SELECTED':'' ;?>  value="card_number">Search by Card Number</option>
-                    <option <?php echo $search_by=='car_number'?'SELECTED':'' ;?>  value="car_number">Search by Car number</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-6">
-                <div class="input-group">
-                    <input type="text" id="search_keyword" name="s" value="<?php echo $keyword;?>"
-                           class="form-control" placeholder="Customer Search Keyword">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-                    </span>
+
+<!-- BEGIN PAGE CONTAINER-->
+<div class="page-content">
+    <div class="content">
+        <?php
+        $this->load->view('inc/notification');
+
+        ?>
+        <!-- BEGIN PAGE TITLE -->
+        <div class="page-title"><i class="fa fa-search-plus"></i>
+            <?php
+            $title = explode(" ",$_page_title);
+            ?>
+            <h3><span class="semi-bold"><?php echo $title[0];?></span> <?php echo isset($title[1])?$title[1]:"";?></h3>
+        </div>
+
+        <!-- BEGIN PlACE PAGE CONTENT HERE -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <div class="grid simple">
+                    <div class="grid-title no-border">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm12">
+                                <h4>Total "<?php echo $_total_rows;?>" results found</h4>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm12">
+
+                                <form action="<?php echo base_url()."customer/search";?>" method="get" id="searchCustomerForm" class="form-horizontal col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="group">
+                                        <div class="col-lg-10 col-md-10 col-sm-12">
+                                            <input type="text" class="form-control" name="q" id="q"
+                                                    placeholder="Search customer using name, phone or email"
+                                                    value="<?php echo $this->input->get("q");?>">
+                                        </div>
+                                        <button class="btn bt-default col-lg-2 col-md-2 col-sm-12"><i class="fa fa-search"></i> Search</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="grid-body no-border">
+                        <table class="table table-bordered no-more-tables table-responsive table-hover">
+                            <thead>
+                            <tr>
+
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Added By</th>
+                                <th>Create Date</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach($_list as $row){ ?>
+                                <tr id="row_<?php echo $row['cust_oid'];?>">
+                                    <td class="firstname"><?php echo $row['cust_firstname'];?></td>
+                                    <td class="lastname"><?php echo $row['cust_lastname'];?></td>
+                                    <td class="telephone"><?php echo $row['cust_phone_no'];?></td>
+                                    <td class="email-body">
+                                        <?php echo substr($row['cust_email'],-11)=="noemail.net"?"":$row['cust_email'];?>
+
+                                    </td>
+                                    <td class="username"><?php echo $row['user_name'];?></td>
+                                    <td class="createdate"><?php echo $row['create_date'];?></td>
+                                    <td>
+                                        <div class="btn-group btn-group-xs" role="group">
+
+                                            <?php if(strlen($row['cust_oid'])>0){ ?>
+                                                <button type="button" class="btn btn-xs btn-default btn-sync"
+                                                        value="<?php echo $row['cust_oid'];?>"><i class="fa fa-refresh"></i> Sync</button>
+                                            <?php
+                                            }//end if
+                                            ?>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            <?php
+                            }//end foreach
+
+                            ?>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <?php echo $this->pagination->create_links();?>
+                        </div>
+
+                    </div>
                 </div>
+
             </div>
-        </form>
+        </div>
+        <!-- END PLACE PAGE CONTENT HERE -->
     </div>
 </div>

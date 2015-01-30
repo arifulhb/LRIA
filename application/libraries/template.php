@@ -352,6 +352,23 @@ class Template
         $this->_ci->load->view('page_template.php',$data);
             
     }//end function
+
+    function customer_search($data)
+    {
+        //Loadign the template
+
+        $data['_content']=$this->_ci->load->view('customer/search',$data,true);
+
+        //Page Class Name
+        $data['_page_class']='customer_search';
+        $data['thisPage']='customerPage';
+        //noindex nofollow
+        $data['_noindex_meta']=true;
+
+        //Load the page
+        $this->_ci->load->view('page_template.php',$data);
+
+    }//end function
     
      function customer_add($data)
     {

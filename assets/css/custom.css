@@ -25,6 +25,10 @@ Webarc Modification
 }
 .accesskey{text-decoration: underline;}
 
+#searchCustomerForm{
+    float: left;
+
+}
 
 #notification{
     /*border-radius: 5px;*/

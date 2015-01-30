@@ -138,6 +138,58 @@ class Customer extends CI_Controller {
 
     }//end function
 
+    public function search(){
+
+
+        if($this->session->userdata('is_logged_in')==TRUE){
+
+            $data=  site_data();
+            $keyword = $this->input->get('q');
+
+            //Load pagination library
+            $this->load->library('pagination');
+
+            //set pagination configuration
+            $config=  getPaginationConfig();//this function is from helpers/ahb_helper.php file
+            $config['base_url'] = base_url().'customer/search?q='.$keyword;
+            $this->load->model('customer_model');
+
+            $config['total_rows'] = $this->customer_model->getTotalSearchNum($keyword);
+            $config['use_page_numbers']=true;
+            $config['per_page'] = 20;
+            $config['num_links'] = 5;
+            $config['uri_segment'] = 3;
+
+            $config['page_query_string'] = true;
+
+            $this->pagination->initialize($config);
+            $data['_total_rows']=$config['total_rows'];
+
+            $offset = $this->input->get("per_page");
+
+            if($offset!=''){
+
+                $data['_list']= $this->customer_model->search($keyword, ($config['per_page']*($offset-1)), $config['per_page']);
+            }else{
+
+
+                $data['_list']= $this->customer_model->search($keyword, $offset, $config['per_page']);
+            }
+
+            $data['_page_title']='Search Result';
+            $data['_menu_top']  ='customer';
+            $data['_menu_active']  ='customer_all';
+            $this->template->customer_search($data);
+
+        }else{
+            //user not logged in
+            //redirect to signin
+            redirect('signin');
+
+        }//end else
+
+    }//end function
+
     /*
     public function test(){
         $this->load->library('LightspeedClient');
@@ -262,38 +314,38 @@ class Customer extends CI_Controller {
             $error_type = "";
             $new_count  = 0;
             $update_cuount = 0;
-            $batch_result = false;
 
 //            Batch Insert to Database
             if(is_null($new_customers)==false){
 
+
                 if(count($new_customers)>0){
 //                  Add New Customer in Batch to database
+
+                    $status = true;
+                    $new_count = count($new_customers);
+
                         $batch_result = $this->customer_model->insert_batch($new_customers);
 
                         if($batch_result ==true){
                             $status = true;
-//                            $result = Array("status"=>true,"new_count"=>count($new_customers), "new_customers"=>$new_customers);
                         }
                         else{
                             $status = false;
                             $error_msg = "Customers insert into database Error";
                             $error_type = "LIRA App Error";
-//                            $result = Array("status"=>false,"error"=>"New ".count($new_customers)." customers insert into database Error. ","errorType"=>"LIRA App Error");
                         }
                 }else{
                     $status = true;
-                    $new_count = 0;
-//                    $result = Array("status"=>true,"new_count"=>0);
+                    $new_count = count($new_customers);
                 }
             }
             else{
                 $status = true;
-                $new_count = 0;
-//                $result = Array("status"=>true,"new_count"=>0);
+                $new_count = count($new_customers);
             }
 
-//            $update_batch_result = false;
+
 
 //            Batch Update Database
             if(is_null($update_customer)==false){
@@ -301,15 +353,6 @@ class Customer extends CI_Controller {
                 if(count($update_customer)>0){
                     $this->customer_model->update_batch($update_customer);
                     $update_cuount = count($update_customer);
-
-//                    if($update_batch_result == true){
-//                        $status = true;
-//                    }else{
-//                        $status = false;
-//                        $error_msg = "Customers Update into database Error";
-//                        $error_type = "LIRA App Error";
-//                    }
-
                 }
                 else{
                     $status = true;

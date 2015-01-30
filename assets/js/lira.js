@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    var app_path =  window.location.origin;
+    var app_path =  window.location.origin; // for live
+    //var app_path =  window.location.origin+"/lria";// for demo
 
     Messenger.options = {
         extraClasses: 'messenger-fixed messenger-on-top messenger-on-right',
@@ -28,7 +29,7 @@ $(document).ready(function(){
 
         $('#change_password').click(function(){
 
-            var user_sn = $("_sn").val();
+            var user_sn = $("#_sn").val();
             var cpass = $("#newPassword").val();
             var rpass = $("#confirmPassword").val();
 
@@ -37,6 +38,7 @@ $(document).ready(function(){
                 $('#newPassword').focus();
                 return 0;
             }
+
 
             $.ajax({
                 type: "POST",
@@ -88,7 +90,7 @@ $(document).ready(function(){
     if(reservationModal>0){
 
 
-        $("#btnSave").html("<i class='"+"fa fa-book"+"'></i> New Reservation");
+        //$("#btnSave").html("<i class='"+"fa fa-book"+"'></i> New Reservation");
 
         //Time pickers
         $('.rclockpicker').clockpicker({
@@ -521,7 +523,7 @@ $(document).ready(function(){
 
                         enableForm();
                         //$("#btnSave").prop('disabled', true);
-                        $('#btnSave').html("<i class='fa fa-book'></i> New Reservation");
+                        //$('#btnSave').html("<i class='fa fa-book'></i> New Reservation");
                     }
                     else{
                         var failed = "<label class='label label-danger'>Reservation Failed <i class='fa fa-exclamation'></i> </label>";

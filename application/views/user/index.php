@@ -4,7 +4,7 @@
 
 
     <header class="page-title">
-        <i class="fa fa-user"></i> <h3 style="width: 50%;"> <?php echo $_page_title;?></h3>
+        <i class="fa fa-user"></i> <h3 style="width: 50%;"><i class="fa fa-users"></i> <?php echo $_page_title;?></h3>
         <a class="btn btn-primary btn-sm pull-right" href="<?php echo base_url().'user/new'?>" role="button">Add User</a>
     </header>
 

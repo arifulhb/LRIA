@@ -15,10 +15,10 @@ function site_data()
     {
 
         $data['_site_title']        = 'LRIA';
-        $data['_site_url']          = 'http://lira.dev';
+        $data['_site_url']          = 'http://bbr.launchstars.sg';
         $data['_site_description']  = 'Lightspeed Reservation Integration App';
         $data['_author']            = 'Ariful Haque';
-        $data['_company']           = 'Launchstars Pvt Ltd';
+        $data['_company']           = 'Launchstars';
         $data['_company_website']   = 'http://www.launchstars.sg';
 
         $CI = get_instance();

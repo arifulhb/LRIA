@@ -7,7 +7,7 @@
 
         ?>
         <!-- BEGIN PAGE TITLE -->
-        <div class="page-title">
+        <div class="page-title"><i class="fa fa-users"></i>
             <?php
             $title = explode(" ",$_page_title);
             ?>
@@ -21,7 +21,25 @@
 
                 <div class="grid simple">
                     <div class="grid-title no-border">
-                        <h4>Customer List</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm12">
+                                <h4>Customer List</h4>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm12">
+
+                                    <form action="<?php echo base_url()."customer/search";?>" method="get" id="searchCustomerForm" class="form-horizontal col-lg-12 col-md-12 col-sm-12">
+
+                                        <div class="group">
+                                            <div class="col-lg-10 col-md-10 col-sm-12">
+                                                <input type="text" class="form-control" name="q" id="q" placeholder="Search customer using name, phone or email">
+                                            </div>
+                                            <button class="btn bt-default col-lg-2 col-md-2 col-sm-12"><i class="fa fa-search"></i> Search</button>
+                                        </div>
+
+                                    </form>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="grid-body no-border">
                         <table class="table table-bordered no-more-tables table-responsive table-hover">

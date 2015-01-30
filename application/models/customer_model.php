@@ -41,45 +41,38 @@ class Customer_model extends CI_Model
 
     }//end function
 
-    public function search($keyword, $search_by,$limit,$offset){
+    public function search($keyword, $limit, $offset){
         
         if($offset==''){
             $offset=0;
         }
-        
-        $sql='SELECT c.cust_sn, c.cust_card_id, cust_first_name, cust_last_name, cust_mobile, cust_car_no, IFNULL(UNIX_TIMESTAMP(c.date_added),0) as date_added, ';
-        $sql.='(SELECT GROUP_CONCAT(n.cmpn_name SEPARATOR ", ") FROM avcd_subscription AS s LEFT OUTER JOIN avcd_campaign AS n ON n.cmpn_sn=s.cmpn_sn WHERE s.cust_sn=c.cust_sn ) AS cmpn_name ';
-        $sql.='FROM (avcd_customer AS c) ';
-        //$sql.='';        
-        switch ($search_by):
-            case 'name':
-                $sql.='WHERE c.cust_first_name LIKE "%'.$keyword.'%" OR c.cust_last_name LIKE"%'.$keyword.'%" ';
-                
-                break;
-            case 'nric':
-                $sql.='LEFT OUTER JOIN avcd_customer_id AS i ON i.cust_sn = c.cust_sn ';
-                $sql.='WHERE c.cust_card_id LIKE "%'.$keyword.'%" ';
-                $sql.='OR i.cust_card_id LIKE  "%'.$keyword.'%" ';
-                break;
-            case 'card_number':
-                $sql.='WHERE c.cust_id LIKE "%'.$keyword.'%" ';
-                break;
-            case 'car_number':
-                $sql.='WHERE c.cust_car_no LIKE "%'.$keyword.'%" ';
-                break;
-        endswitch;
-                $sql.='GROUP BY c.cust_sn ';
-                $sql.='ORDER BY c.cust_first_name ';
-                $sql.='LIMIT '.$offset.', '.$limit;
-                
-         $res=$this->db->query($sql);
-         
-         //echo 'SQL: '.$this->db->last_query();         
-         //exit();
-         
-         return $res->result_array();
+
+        $this->db->select("c.*, u.user_name");
+        $this->db->from("tblCustomer AS c");
+        $this->db->join("tblusers as u", "u.user_sn=c.create_by");
+        $this->db->like("c.cust_firstname", $keyword);
+        $this->db->or_like("c.cust_lastname", $keyword);
+        $this->db->or_like("c.cust_phone_no", $keyword);
+        $this->db->or_like("c.cust_email", $keyword);
+        $this->db->limit($offset, $limit);
+
+        $res = $this->db->get();
+
+        return $res->result_array();
         
     }//end function
+
+    public function getTotalSearchNum($keyword){
+
+        $this->db->select("c.cust_sn");
+        $this->db->from("tblCustomer AS c");
+        $this->db->like("c.cust_firstname", $keyword);
+        $this->db->or_like("c.cust_lastname", $keyword);
+        $this->db->or_like("c.cust_phone_no", $keyword);
+
+        $res = $this->db->get();
+        return $res->num_rows();
+    }
 
     /*
      * Get all client ids
@@ -110,37 +103,6 @@ class Customer_model extends CI_Model
         return $res->result_array();
 
 
-    }//end function
-    
-    public function getTotalSearchNum($keyword, $search_by){
-        
-        
-        $sql='SELECT cust_sn ';
-        //$sql.='(SELECT GROUP_CONCAT(n.cmpn_name SEPARATOR ", ") FROM avcd_subscription AS s LEFT OUTER JOIN avcd_campaign AS n ON n.cmpn_sn=s.cmpn_sn WHERE s.cust_sn=c.cust_sn ) AS cmpn_name ';
-        $sql.='FROM (avcd_customer AS c) ';
-        //$sql.='';        
-        switch ($search_by):
-            case 'name':
-                $sql.='WHERE c.cust_first_name LIKE "%'.$keyword.'%" OR c.cust_last_name LIKE"%'.$keyword.'%" ';
-                
-                break;
-            case 'nric':
-                $sql.='WHERE c.cust_card_id LIKE "%'.$keyword.'%" ';
-                break;
-            case 'card_number':
-                $sql.='WHERE c.cust_id LIKE "%'.$keyword.'%" ';
-                break;
-            case 'car_number':
-                $sql.='WHERE c.cust_car_no LIKE "%'.$keyword.'%" ';
-                break;
-        endswitch;
-                //$sql.='GROUP BY c.cust_sn ';                  
-         $res=$this->db->query($sql);
-         
-         //echo 'SQL: '.$this->db->last_query();
-         
-         return $res->num_rows();
-        
     }//end function
 
           
